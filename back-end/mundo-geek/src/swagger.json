@@ -1,0 +1,613 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "E-commerce de produtos",
+        "description": "Essa api-rest. Tem como objetivo implementar todo conteúdo estudado nos cursos Alura bem como colocar em prática os conceitos do swagger, além de obter uma futura expansão com a integração de uma interface. As tecnologias utilizadas no back-end: Typeorm, Postgres e Typescript com Node.js. Front-end: React e Typescript",
+        "termsOfService": "http://localhost:3000/terms",
+        "contact": {
+            "email": "cleane.batista@modagr.com.br"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3001/",
+            "description": "Api de teste"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "summary": "Login de usuarios",
+                "description": "Essa rota será responsável por logar o usuario no sistema",
+                "tags": ["Usuarios"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Usuario"
+                            },
+                            "examples": {
+                                "usuarios": {
+                                    "value": {
+                                        "email": "cleane.batista@gmail.com",
+                                        "senha": "Teste123456"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Você não possui permissão"
+                    },
+                    "400": {
+                        "description": "Usuário já cadastrado"
+                    },
+                    "200": {
+                        "description": "Usuário logado"
+                    }
+                }
+            }
+        },
+
+        "/usuarios": {
+            "post": {
+                "summary": "Cadastro de usuários",
+                "description": "Essa rota será responsável por cadastrar um novo usuário",
+                "tags": ["Usuarios"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Usuario"
+                            },
+                            "examples": {
+                                "usuarios": {
+                                    "value": {
+                                        "nome": "cleane evelin",
+                                        "sobrenome": "batista",
+                                        "email": "cleane.batista@gmail.com",
+                                        "senha": "Teste123456",
+                                        "role": "A"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "E-mail já cadastrado"
+                    },
+                    "201": {
+                        "description": "Usuário cadastrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Usuario"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "description": "Busca de usuarios",
+                "summary": "Busca de usuarios",
+                "tags": ["Usuarios"],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Usuario"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios/{id}": {
+            "get": {
+                "description": "Busca de um usuario pelo id",
+                "summary": "Busca de um usuario pelo id",
+                "tags": ["Usuarios"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Busca de um usuario pelo id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Usuario"
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Alterar o usuario pelo id",
+                "summary": "Alterar um usuario pelo id",
+                "tags": ["Usuarios"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Alterar um usuario pelo id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Usuario"
+                            },
+                            "examples": {
+                                "usuarios": {
+                                    "value": {
+                                        "nome": "Mateus Henrique Lima da Silva",
+                                        "sobrenome": "Silva",
+                                        "email": "mateush88@gmail.com",
+                                        "senha": "123456",
+                                        "role": "A"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Usuario"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "deletar o usuario pelo id",
+                "summary": "deletar um usuario pelo id",
+                "tags": ["Usuarios"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "deletar um usuario pelo id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Usuario"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/categorias": {
+            "post": {
+                "summary": "Cadastro de categorias",
+                "description": "Essa rota será responsável por cadastrar uma nova categoria",
+                "tags": ["Categorias"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Categoria"
+                            },
+                            "examples": {
+                                "categorias": {
+                                    "value": {
+                                        "titulo": "tênis"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Você não possui permissão"
+                    },
+                    "400": {
+                        "description": "Categoria já cadastrada"
+                    },
+                    "201": {
+                        "description": "Categoria cadastrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Categoria"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "description": "Busca de categorias",
+                "summary": "Busca de categorias",
+                "tags": ["Categorias"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Categoria"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/categorias/{id}": {
+            "get": {
+                "description": "Busca de uma categoria pelo id",
+                "summary": "Busca de uma categoria pelo id",
+                "tags": ["Categorias"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Busca de uma categoria pelo id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Categoria"
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Alterar uma categoria pelo id",
+                "summary": "Alterar uma categoria pelo id",
+                "tags": ["Categorias"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Alterar uma categoria pelo id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Categoria"
+                            },
+                            "examples": {
+                                "categorias": {
+                                    "value": {
+                                        "titulo": "Calças"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Categoria"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "deletar uma categoria pelo id",
+                "summary": "deletar uma categoria pelo id",
+                "tags": ["Categorias"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "deletar uma categoria pelo id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Categoria"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/produtos": {
+            "post": {
+                "summary": "Cadastro de produtos",
+                "description": "Essa rota será responsável por cadastrar uma nova produto",
+                "tags": ["Produtos"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Produto"
+                            },
+                            "examples": {
+                                "produtos": {
+                                    "value": {
+                                        "nome": "Console PlayStation 5",	
+                                        "descricao": "Desfrute do carregamento extremamente rápido com o SSD de altíssima velocidade, uma imersão mais profunda com suporte a feedback tátil, gatilhos adaptáveis. e áudio 3D, além de uma geração inédita de jogos incríveis para PlayStation. Domine o poder de uma CPU e GPU personalizadas e o SSD com E/S integradas que redefinem as regras do que o console PlayStation pode fazer.Conecte seu PlayStation VR ao console PS5 para curtir jogos compatíveis com o PS VR. Para configurar seu PS VR com o console PS5, você precisará da PlayStation Camera para PS4 e do adaptador para PlayStation Camera.",
+                                        "preco": "5.000",
+                                        "imagem": "https://s2.glbimg.com/icdZ-wCUC6Qez2i9tG8XdicIN4w=/0x0:695x390/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2021/P/q/5D6AfXSAmoZvJ97vgaBg/playstation-5-ps5-corte-producao-15-16-milhoes.jpg",
+                                        "categorias": [
+                                            {"id": "3"},
+                                            {"id": "4"}
+                                        ],
+                                        "usuario": "2"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Você não possui permissão"
+                    },
+                    "400": {
+                        "description": "Produto já cadastrado"
+                    },
+                    "201": {
+                        "description": "Produto cadastrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Produto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "description": "Busca de produtos",
+                "summary": "Busca de produtos",
+                "tags": ["Produtos"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Produto"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/produtos/{id}": {
+            "get": {
+                "description": "Busca de um produto pelo id",
+                "summary": "Busca de um produto pelo id",
+                "tags": ["Produtos"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Busca de um produto pelo id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Produto"
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Alterar um produto pelo id",
+                "summary": "Alterar um produto pelo id",
+                "tags": ["Produtos"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Alterar um produto pelo id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Produto"
+                            },
+                            "examples": {
+                                "produtos": {
+                                    "value": {
+                                        "nome": "PlayStation 5",	
+                                        "descricao": "Desfrute do carregamento extremamente rápido com o SSD de altíssima velocidade, uma imersão mais profunda com suporte a feedback tátil, gatilhos adaptáveis. e áudio 3D, além de uma geração inédita de jogos incríveis para PlayStation. Domine o poder de uma CPU e GPU personalizadas e o SSD com E/S integradas que redefinem as regras do que o console PlayStation pode fazer.Conecte seu PlayStation VR ao console PS5 para curtir jogos compatíveis com o PS VR. Para configurar seu PS VR com o console PS5, você precisará da PlayStation Camera para PS4 e do adaptador para PlayStation Camera.",
+                                        "proco": "5.000",
+                                        "imagem": "https://s2.glbimg.com/icdZ-wCUC6Qez2i9tG8XdicIN4w=/0x0:695x390/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2021/P/q/5D6AfXSAmoZvJ97vgaBg/playstation-5-ps5-corte-producao-15-16-milhoes.jpg",
+                                        "categorias": [
+                                            {"id": "3"},
+                                            {"id": "4"}
+                                        ],
+                                        "usuario": "2"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Produto"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "deletar um produto pelo id",
+                "summary": "deletar um produto pelo id",
+                "tags": ["Produtos"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "deletar um produto pelo id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Produto"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Usuario": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "sobrenome": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "senha": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "enum",
+                        "enum": ["admin", "cliente"]
+                    }
+                }
+            },
+            "Categoria": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "titulo": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Produto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "preco": {
+                        "type": "decimal"
+                    },
+                    "imagem": {
+                        "type": "string"
+                    },
+                    "usuario_id": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Categoria_Produto": {
+                "type": "object",
+                "properties": {
+                    "categoria_id": {
+                        "type": "number"
+                    },
+                    "produto_id": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
