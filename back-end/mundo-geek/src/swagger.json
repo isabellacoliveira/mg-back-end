@@ -70,7 +70,7 @@
                                         "sobrenome": "batista",
                                         "email": "cleane.batista@gmail.com",
                                         "senha": "Teste123456",
-                                        "role": "A"
+                                        "role": "admin"
                                     }
                                 }
                             }
