@@ -20,7 +20,7 @@ routes
     .get(new UsuarioController().listar)
 
 
-routes.use(permission("A"))
+routes.use(permission("admin"))
 
     .route('/categorias')
     .post(new CategoriaController().criar)

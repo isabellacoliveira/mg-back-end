@@ -102,7 +102,7 @@ export class UsuarioController {
 			throw new AppError('E-mail ou senha invalidos', 404)
 		}
 
-		const token = jwt.sign({ id: usuario.id, role: usuario.role }, process.env.JWT_PASS ?? '', {
+		const token = jwt.sign({ id: usuario.id, nome: usuario.nome, sobrenome: usuario.sobrenome, role: usuario.role }, process.env.JWT_PASS ?? '', {
 			expiresIn: '4d',
 		})
 
