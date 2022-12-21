@@ -14,6 +14,6 @@ export class Categoria {
 	@Column("varchar", { unique: true })
 	titulo: string
  
-	@ManyToMany(() => Produto, produto => produto.categorias, { onDelete: 'CASCADE', eager: true })
+	@ManyToMany(() => Produto, produto => produto.categorias, { onDelete: 'CASCADE' })
 	produtos: Produto[]
 }

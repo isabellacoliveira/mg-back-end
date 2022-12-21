@@ -5,7 +5,9 @@ import {
     UpdateDateColumn, 
     Column,
     OneToMany,
+    OneToOne,
     } from 'typeorm';
+import { Carrinho } from './Carrinho';
 import { Produto } from './Produto';
 
 export enum Role {
@@ -45,4 +47,9 @@ export class Usuario {
 
     @OneToMany(() => Produto, produto => produto.usuario, { onDelete: 'CASCADE'})
 	produtos: Produto[]
+
+    @OneToMany(() => Carrinho, carrinho => carrinho.usuario,
+    {cascade: true}) 
+    carrinhos: Carrinho[]
+
 }

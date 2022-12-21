@@ -41,8 +41,6 @@ export class CategoriaController {
 		return res.status(201).json(categoria);
 	}
 
-
-
 	async atualizar(req: Request, res: Response) {
 		const id = req.params;
 		const { titulo } = req.body;

@@ -3,7 +3,7 @@
     "info": {
         "title": "E-commerce de produtos",
         "description": "Essa api-rest. Tem como objetivo implementar todo conteúdo estudado nos cursos Alura bem como colocar em prática os conceitos do swagger, além de obter uma futura expansão com a integração de uma interface. As tecnologias utilizadas no back-end: Typeorm, Postgres e Typescript com Node.js. Front-end: React e Typescript",
-        "termsOfService": "http://localhost:3000/terms",
+        "termsOfService": "http://localhost:3001/terms",
         "contact": {
             "email": "cleane.batista@modagr.com.br"
         },
@@ -252,6 +252,7 @@
                 "description": "Busca de categorias",
                 "summary": "Busca de categorias",
                 "tags": ["Categorias"],
+                "security": [{ "bearerAuth": [] }],
                 "responses": {
                     "201": {
                         "description": "OK",
@@ -413,6 +414,7 @@
                 "description": "Busca de produtos",
                 "summary": "Busca de produtos",
                 "tags": ["Produtos"],
+                "security": [{ "bearerAuth": [] }],
                 "responses": {
                     "201": {
                         "description": "OK",

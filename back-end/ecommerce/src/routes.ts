@@ -1,16 +1,17 @@
 import { Router } from 'express'
 import { CategoriaController } from './controllers/CategoriaController'
 import { UsuarioController } from './controllers/UsuarioController'
-import { ProdutoController } from './controllers/ProdutoControlle'
+import { ProdutoController } from './controllers/ProdutoController'
 import {  permission } from './middlewares/authUsuario'
+import CarrinhoController from './controllers/CarrinhoController'
+import CarrinhoProdutoController from './controllers/CarrinhoProdutoController'
 
 const routes = Router()
 
 routes.route('/login').post(new UsuarioController().login)
+
 routes.route('/produtos').get(new ProdutoController().listar)
 routes.route('/categorias').get(new CategoriaController().listar)
-
-
 
 routes
     .route('/usuarios/:id')
@@ -22,6 +23,15 @@ routes
     .route('/usuarios')
     .post(new UsuarioController().criar)
     .get(new UsuarioController().listar)
+
+routes
+    .route('/carrinhoproduto/:id')
+    .delete(new CarrinhoProdutoController().deletar)
+    
+routes
+    .route('/carrinhos')
+    .post(new CarrinhoController().criar)
+    .get(new CarrinhoController().listar)
 
 
 routes.use(permission("admin"))

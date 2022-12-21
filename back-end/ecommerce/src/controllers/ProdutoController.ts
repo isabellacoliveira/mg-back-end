@@ -56,8 +56,6 @@ export class ProdutoController {
 		return res.status(201).json(produto);
 	}
 
-
-
 	async atualizar(req: Request, res: Response) {
 		const { id } = req.params;
 		

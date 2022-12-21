@@ -5,8 +5,10 @@ import {
 	JoinTable,
 	ManyToMany,
 	ManyToOne,
+	OneToMany,
 	PrimaryGeneratedColumn,
 } from 'typeorm'
+import { Carrinhos_Produtos } from './CarrinhoProduto'
 import { Categoria } from './Categoria'
 import { Usuario } from './Usuario'
 
@@ -21,7 +23,7 @@ export class Produto {
 	@Column("varchar")
 	descricao: string
 
-	@Column("decimal", { precision: 5, scale: 2 })
+	@Column("decimal", { precision: 18, scale: 2 })
 	preco: number
 
 	@Column()
@@ -32,7 +34,7 @@ export class Produto {
 
 	@ManyToMany(() => Categoria, categoria => categoria.produtos, {onDelete: 'CASCADE'})
 	@JoinTable({
-		name: 'categoria_produto',
+		name: 'categorias_produtos',
 		joinColumn: {
 			name: 'categoria_id',
 			referencedColumnName: 'id',
@@ -47,4 +49,7 @@ export class Produto {
 	@ManyToOne(() => Usuario, usuario => usuario.produtos, {onDelete: 'CASCADE'})
 	@JoinColumn({ name: 'usuario_id' })
 	usuario: Usuario
+
+	@OneToMany(() => Carrinhos_Produtos, carrinho_produto => carrinho_produto.produto)
+    carrinhos_produtos: Carrinhos_Produtos[]
 }
